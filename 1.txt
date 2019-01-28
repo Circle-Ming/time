@@ -1,0 +1,90 @@
+\begin{table}[!htbp]
+\begin{center}
+\caption{Notations}
+\begin{tabular}{cccc}
+	\toprule
+	\multicolumn{1}{m{3cm}}{\centering Testing?methods}
+	&\multicolumn{1}{m{3cm}}{\centering Testing object}
+&\multicolumn{1}{m{3cm}}{\centering Test value}
+&\multicolumn{1}{m{3cm}}{\centering P\_value}\\
+	\midrule
+Levin-Lin-Chu &Pannel &-47.1735 &0\\
+Dickey-Fuller &Adair &-2.506 &0.325\\
+Dickey-Fuller &Allen &-0.915 &0.9545\\
+Dickey-Fuller &Anderson &-1.411 &0.8576\\
+Dickey-Fuller &Ballard &-1.322 &0.8824\\
+Dickey-Fuller &Barren &0.693 &0.997\\
+	\bottomrule
+\end{tabular}\label{tb:notation}
+\end{center}
+\end{table}
+
+
+\begin{table}[!htbp]
+\begin{center}
+\caption{Notations}
+\begin{tabular}{ccccc}
+	\toprule
+	\multicolumn{1}{m{3cm}}{\centering Year}
+	&\multicolumn{1}{m{3cm}}{\centering Moran's I}
+&\multicolumn{1}{m{3cm}}{\centering E(I)}
+&\multicolumn{1}{m{3cm}}{\centering SD(I)}
+&\multicolumn{1}{m{3cm}}{\centering P\_value}\\
+	\midrule
+2010 &0.015 &-0.002 &0.003 &0.000 \\
+2011 &0.021 &-0.002 &0.004 &0.000 \\
+2012 &0.015 &-0.002 &0.004 &0.000 \\
+2013 &0.015 &-0.002 &0.004 &0.000 \\
+2014 &0.024 &-0.002 &0.004 &0.000 \\
+2015 &0.021 &-0.002 &0.004 &0.000 \\
+2016 &0.019 &-0.002 &0.004 &0.000 \\
+2017 &0.015 &-0.002 &0.004 &0.000 \\
+	\bottomrule
+\end{tabular}\label{tb:notation}
+\end{center}
+\end{table}
+
+\begin{table}[!htbp]
+\begin{center}
+\caption{Notations}
+\begin{tabular}{ccccc}
+	\toprule
+	\multicolumn{1}{m{3cm}}{\centering Year}
+	&\multicolumn{1}{m{3cm}}{\centering Moran's I}
+&\multicolumn{1}{m{3cm}}{\centering E(I)}
+&\multicolumn{1}{m{3cm}}{\centering SD(I)}
+&\multicolumn{1}{m{3cm}}{\centering P\_value}\\
+	\midrule
+2010 &-0.380  &-0.250  &0.300  &0.332 \\
+2011 &-0.509  &-0.250  &0.316  &0.206 \\
+2012 &-0.536  &-0.250  &0.326  &0.191 \\
+2013 &-0.482  &-0.250  &0.301  &0.221 \\
+2014 &-0.544  &-0.250  &0.307  &0.169 \\
+2015 &-0.547  &-0.250  &0.294  &-1.009 \\
+2016 &-0.531  &-0.250  &0.273  &0.151 \\
+2017 &-0.522  &-0.250  &-1.072  &0.142 \\
+	\bottomrule
+\end{tabular}\label{tb:notation}
+\end{center}
+\end{table}
+
+\begin{table}[!htbp]
+\begin{center}
+\caption{Notations}
+\begin{tabular}{ccccc}
+	\toprule
+	\multicolumn{1}{m{3cm}}{\centering Var}
+	&\multicolumn{1}{m{3cm}}{\centering Coef.}
+&\multicolumn{1}{m{3cm}}{\centering Std.}
+&\multicolumn{1}{m{3cm}}{\centering Err.}
+&\multicolumn{1}{m{3cm}}{\centering P\_value}\\
+	\midrule
+$\gamma$ &-1.970924 &0.1075194 &-18.33 &0.003 \\
+$\rho$ &0.6712315 &0.0556381 &12.06 &0.007 \\
+$\beta$  &1392.982 &96.31823 &14.46 &0.005 \\
+$\alpha$  &89738.74 &4797.146 &18.71 &0.003 \\
+
+	\bottomrule
+\end{tabular}\label{tb:notation}
+\end{center}
+\end{table}
