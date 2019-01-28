@@ -1,0 +1,14 @@
+
+
+\begin{equation}
+\beta_{ij} = \frac{Y_ij}{Y_i}=\frac{\sum_{n=1}^{m} r_n(x_{in}-x_{jn}}{Y_i}
+\end{equation}
+
+Through this calculation, as long as we know the value $x_j$ corresponding to each factor of each non-source county $j$ and source county $i$, we can complete the detection of the drug quantity in all counties of next year through the data of the current year. But the premise of all this is that we complete the calculation of the correlation between factors such as $r_1$ and the number of drugs, that is, the calculation of the weight coefficient. The following describes the solution process of our weight coefficients.
+For the weight coefficient, we use following to solve:
+\begin{equation}
+Y_i = sum_{j=1}^{k} r_j x_{ij}+r_0+\delta +\varepsilon
+\end{equation}
+
+Because we have the 2010-2016 census results, we can get the corresponding $Y_i$ value every year through the form of part 1, providing a large enough data to choose. We consider that only a few hundred equations are needed to solve hundreds of unknowns, but we have seven years of data, far exceeding the number of equations we need. At the same time, there may be errors in considering statistics on socio-economic factors and statistics on the amount of drugs.
+In order to fully reduce the impact of this number of individuals, we use a gradient algorithm in machine learning to correct each parameter. We first assign each parameter to 0. If each value is modified and tested by the idea of gradient descent, the calculation of these values is completed and the model is successfully modified.
