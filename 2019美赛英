@@ -1,20 +1,113 @@
-1Introduction
-Opioids are widely used in the United States for the treatment, management of pain (legal, prescription use) and for recreational purposes (illegal, non-prescription use), 
-while the United States is currently experiencing a national crisis regarding the use of synthetic and non-synthetic opioids. 
-2Simplifications and Assumptions of the Problem
-3Choice and Basic Setting of the Model
-4Details of the Model
-5Modification of the Model
-6Analysis of the Results from the model
-7Appliance of the Model
-8Sensitivity Analysis
-9Conlusions
-10Strengths and weaknesses
-11A memo
-12Appendices
+3 Details of the Model
 
+In the process of communication, the factors that can intuitively function are time and space. Therefore, the data is first tested for stationarity to oerserve whether the data is unstable or not. Then soatial dependent test is needed to check whether the data has obvious spatially agglomeration. The results show that the state and the county are generally in a state of steady growth, and there is less possibility of violent fluctuations, and there may be instability in the individual counties. Geographically, there is a phenomenon of geographical agglomeration between the county and the county, that is, the large amount of drugs in a certain county means that the amount of drugs in the surrounding counties may also be large, but it is not obvious.
 
+3.1 Time Stability Test
 
+Time stability test of the states and counties is mainly based on the unit root test. First, the LLC (Levin-Lin-Ch test) unit root test is performed on the panel population, and then ADF (Augment Dickey-Fuller test) is performed on a single state and county. The LLC unit root test is an extension of the ADF in the panel data.
 
+The ADF test mainly studies whether the value of the previous year has a significant impact on the growth of this year. The representative of the ADF test is whether the data will fluctuate drastically with the change of the year. For the data of the $t$ year, we can do the following regression:
+$$\Delta X_t = \delta X_{t-1} \sum_{l=1}^{p} \beta_i \Delta X_{t-l} +beta t +\alpha +\epsilon_t$$,
+where $\Delta X_t = X_t - X_{t-1}$ represents the increment of the current year relative to the previous year, $t$ represents the year, then we establish a regression model, $l$ represents the year interval, $1 <= l <= p_i$. The original hypothesis is:
+\text{H}_0 : \delta = 0,
+that is, the value of the previous year has no significant effect on the growth of this year, and the time series is stable. To highlight the impact of $\X_t$, three regressions are needed to gradually eliminate $t$ and the constant term $\alpha$. Once each time the regression rejects the null hypothesis, the time series is stationary.
+The test of the null hypothesis is generally performed by the $t$ test, but since the time series has a sequence correlation, that is, $\text{Cov} (X_t, X_t-l)\neq 0$ causes the least squares estimator to be ineffective, so the Newey-West correction is used to the $t$ statistic and then test it. The LLC test is performed in the same manner. Assuming that the individual is homogenous, then the ADF test of the panel data is performed.
+The data test results given in the question are shown in the table.
 
+table 1 Test result table
 
+In the test result table, the test with the lowest P_ value in the three regressions is selected for reporting, and the county-level data is intercepted for reporting. It can be seen that under the condition of 5% significance level of the given 8 years of data, the panel data shows a significant smoothness globally, and most of the sections (states and counties) of the panel have not passed the stationarity test. It indicates that there may be a certain degree of sequence correlation in each section of the given sample, which shows a relatively severe fluctuation state, but the joint condition of the panel does not appear to be abruptly and suddenly reduced. It is maintained at a stable level. The cointegration relationship may exist between the sections, that is, the situation between the cross section and the cross section. In addition, for the ADF test with time $t$ for each section, we found that most of the locations with large growth trends or drug discovery, the coefficient before the time trend item mostly passed the test whose significance level is 10%. This also finds a reasonable basis for using ARIMA time series to predict the source of infection after simplifying the model in part one.
+
+3.2 Spatial Dependence Test
+The test of the degree of influence on the spatial location between states and counties is based on the Moran I statistic to understand the extent to which space is agglomerated. The specific inspection steps are as follows:
+First, calculate the spatial distance weight matrix $W$, 
+$W=[w_{ij}]_{n×n} 
+$w_ij$ represents the standardized adjacency between the two states or counties. Since the adjacency on the administrative division does not take into account the actual geographical distance, it is assumed that 30km is the adjacency between the counties and 100km is the adjacency between the states. Unnormalized adjacency status is:
+$$
+\bar{w_ij}=
+\begin {cases}
+1, &\ R_{ij}<=R_0 \\\
+0, &\ R_{ij}>R_0
+\end{cases}
+$$
+Where R_{ij} represents the distance of the geographic location between two states or counties, and R_0 represents the distance set to be adjacent. According to this, we can know:
+$$w_{ij} = \frac{\bar{w_{ij}}}{\sum_{j=1}^{j=n} \bar{w_{ij}}$$
+Subsequently, calculate the Moran I statistic:
+$$I=\frac{n\sum_i \sum_{j \neq i} w_{ij} (y_i - \bar{y})(y_j - \bar{y})}{(\sum_i \sum_{j\neq i}w_{ij})\sum_i (y_i - \bar(y))^2}$$
+Y_{ij} indicates the number of local drug reports. I approximates a normal distribution and can be tested for significance. According to the data in the question, the results are as follows:
+
+table 2 
+
+It can be seen from the results that the Moran I statistic between the county and the county is significantly greater than 0 in the case where the significance level is 5%, that is, the geographical agglomeration is exhibited, but I is not close to 1. So the geographical agglomeration is not obvious. The number of states is too small, and there is an insignificant dispersion.
+3.3 Propagation Matrix
+To describe the effects of multiple factors on the number of opioids in one geographic region (state, county) versus another geographic region (state, county), we abstract it into a mathematical indicator called propagation intensity\beta_{ij}, then we construct a propagation matrix to describe the mutual influence of the number of opioids in multiple geographic regions. In essence, we estimate a propogation matrix that quantifies how percolate through the number of the drugs reports in a geographic area from one period to the next:
+公式：矩阵相乘 t+1=传播矩阵 * t
+T_it is the number of opioid reports reported by $i$ state (county) in $t$ years, T_it+1 is the number of opioid reports reported by $i$ state (county) in $t+1$ years, and β_ij is the state (county) to j state (county) propagation intensity
+In vector form and in years of analysis there are:
+T_t+1 = B * T_t
+T_t+2 = B * T_t+1
+T_t+3 = B * T_t+2
+...
+T_t+p = B * T_t+p-1
+The matrix B can be estimated from the data of many years. In the above calculation process, there are:
+E_ij = β_ij * T_it
+E_ij is the product of the propagation intensity of the state (county) i versus the state (county) j and the number of opioid reports in the t-year of the state (county) i. We call it "effective propagation quantity", indicating the specific effective impact quantity of a region (state, county) on another geographic region (state, county), followed by:
+T_j,t+1 = j从1到n相加 β_ij*Ti_t =j从1到n相加 E_ij,
+where n is the number of all geographic regions (states, counties). The above formula indicates that the number of opioids in a geographic region (state, county) within one year can be determined by all other known geographic regions (states, counties) with efficient propagation quantity cumulative summation calculation in the previous year.
+
+5 Model solution
+5.1 Simplification of the model
+The data we have is the total number of opioid reports of the states (counties) from 2010 to 2017, but there are n_2 unknowns in the propagation matrix to be calculated (n is the number of states (counties)), and the effective data is only the quantity among eight years, so based on the available data we can not estimate the effective propagation matrix between the county and the county, so we simplify the model:
+· In each state, there is only one source county of the opioid epidemic every year.
+· The increment of opioid reports by each county other than the source county to the next year is only affected by the opioid report numbers of source counties in that year.
+· The increment in the number of opioids in a county in a year can be obtained from the effective quantity of the source county to itself in the previous year.
+From the above description:
+T_i,T+1 = △_i,t + T_i,T
+△i,t = β_k,i * T_k,t
+where k is the source county of the t-year, △_i, t is the growth of the number of opioid reports reported by county i from the t-year to the t+1-year. According to the above formula, we have greatly reduced the amount of data required for the calculation formula by simplifying the model.
+5.1 Initialization of the propagation matrix
+5.1.1 Propagation matrix between states
+We consider that the propagation intensity between two counties in the same state is generally different from the propagation between the two counties in different states, so before we initialize the matrix between the counties, we first calculate the propagation matrix between states to describe the propagation intensity between two counties in different states.
+Firstly, determine the source state of each year, that is, the state with the largest number of opioids per year.
+Secondly, use the available data to find the increment in the number of reported opioid reports per year, and then:
+β_ijt = △i_t / T_kt
+that is, through the data every two years, the propagation matrix between states can be calculated.
+Thirdly, use the existing multi-year data to correct the propagation matrix between states:
+β_ij_final = t从1到m求和 β_ijt / m
+where m is the total number of years, and the more accurate propagation matrix between states can be obtained by the correction of the above formula.
+5.1.2 Initialize the propagation matrix between counties
+In the above-mentioned calculated propagation matrix between states, we observe that the intensity of propagation between states is 10^(-3), obviously, considering that the propagation intensity between counties in the same state is generally greater than the propagation intensity between the states, so we initialize the propagation matrix between the counties as following:
+·For different counties in the same state, the propagation intensity is initialized to a fixed value α=0.01, which belongs to the intensity of 10^(-2), which meets the above requirements.
+·For different counties between different states, the propagation intensity is determined as the propagaiton intensity between the counties of the county.
+5.2 Correction of the propagation matrix between counties
+Since the propagation matrix between states is the result of years of data revision, in order to make the data in the different counties of the same state and different states have the same data changes in the revision process, so that the data is more effective, we will accumulate the intensity of transmission between different counties in the same state from 0.01*m. The correction process is as follows:
+β_ij_final = t从1到m求和 β_ijt / m
+5.3 Model prediction
+5.3.1Predict the source of the next year
+Since the simplified propagation matrix cannot predict the source of infection in the next year, time series prediction is needed. We use the ARIMA (Autoregressive Integrated Moving Average model) model to predict. Based on the 4.1 test, we can know that the time series of a single state or county is non-stationary but co-integrated. Therefore, we develop the cointergration for the time series of a single state or county.
+First, the overall Y_t=\sum Y_{it} is tested, which passes the stationarity test, and according to the results of the ADF test, the coefficients of each test variable pass the significance test, that is, the following model:
+$$\hat{\Delta Y_t} = \alpha +\beta t-\gamma Y_{t-1}+\rho \Delta X_{t-1}$$
+Each of its parameters passed the $t$ test with a significance level of 5%. The results are reported in the following table:
+
+table 3
+
+By predicting the total amount of $\hat {Y_{t+1}}=\hat{\Delta Y_{t}}+Y_t$ for the next year, we can also find the regression mean for each year:
+E (Y_t |X) )=\hat{\Delta Y_{t}+Y_{t-1}}
+The total amount minus the residual value of other counties or states as a substitute for $Y_it$:
+$\bar{Y_{it}}=\hat{Y_t}-\sum_{j=1,j\neq i}^{n} Y_{jt}$
+Perform a stationarity test on the transformed $\bar{Y_{it}}$, take a first-order difference if it is not smooth, take a second-order difference if the first-order difference is not stable, and so on. Due to the limitation of the observation time value, the difference can not be carried out without limitation, and the fourth-order difference can be taken at most. If the stationarity test cannot be passed, the next step is directly performed with the substitute value according to the principle of minimum information loss.
+The data obtained in the previous step is identified by the partial autocorrelation coefficient and the autocorrelation function. If the partial autocorrelation coefficient is truncated and the autocorrelation function is tailed, then establish the AR model. If the partial correlation function is tailing and the autocorrelation function is truncated, then establish the MA model. If the partial correlation function and the autocorrelation function are both tailed, the ARMA model is established. The basic settings of each model are as follows:
+Autoregressive model AR:
+$\bar{Y_t}=c+\sum_{t=1}^p \theta_i \bar{Y_{t-i}+\varepsilon_t}$
+Moving average model MA:
+$\bar{Y_t}=\mu+\sum_{t=1}^p \theta_i \varepsilon_{t-i}+\varepsilon_{t-i}$
+ARMA model:
+$\bar{Y_t}=c+\sum_{t=1}^p \theta_i \bar{Y_{t-i}+\varepsilon_t}+\varphi_i \varepsilon_{t-i}$
+Regression predictions were developed for all counties or states, and we can select the state or county with the highest predicted value as the “source of infection”.
+5.3.2 Prediction
+· Use the data from the previous year to predict the source of the next year
+· Calculate the increment from the year to the next year based on the source of each year
+·Based on the sum of data and growth in the previous year, you can predict the number of each year.
+That is:
+T_I,T+1 = △_i,t + T_i,T
+△i,t = β_k,i * T_k,t
